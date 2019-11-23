@@ -2,18 +2,18 @@ package frc.robot.commands;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearShift extends Command {
-    public GearShift() {
-        requires(Robot.dShifter);
+public class ClimberExtend extends Command {
+    public ClimberExtend() {
+        requires(Robot.climber);
     }
 
     protected void initialize() {
-        
-        Robot.dShifter.lowGear();
     }
 
     protected void execute() {
-           Robot.dShifter.highGear();
+        
+        
+           Robot.climber.extend(); //Robot climber pusher extends 
     }
 
     protected boolean isFinished() {
@@ -22,7 +22,6 @@ public class GearShift extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.dShifter.lowGear();
     }
     
     // Called when another command which requires one or more of the same

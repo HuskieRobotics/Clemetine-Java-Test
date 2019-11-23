@@ -1,16 +1,22 @@
 package frc.robot.commands;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 
-public class KickerPistons extends Command {
-    public KickerPistons() {
+
+
+public class Kicker extends Command {
+    public Kicker() {
        // requires(Robot.kickers);
     }
 
     protected void initialize() {
+        Robot.kickers.up();
     }
 
     protected void execute() {
+        Robot.kickers.down();
+        Timer.delay(0.6);
     }
 
     protected boolean isFinished() {

@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Hatch;
+import frc.robot.subsystems.HatchPiston;
 import frc.robot.subsystems.DogShifter;
-import frc.robot.subsystems.Kicker;
+import frc.robot.subsystems.KickerPistons;
+import frc.robot.subsystems.ClimberPistons;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.cscore.UsbCamera;
 
@@ -29,10 +30,12 @@ import edu.wpi.cscore.UsbCamera;
 public class Robot extends TimedRobot {
   public static Drivetrain drivetrain; 
   public static OI oi;
-  public static Hatch hatch;
+  public static HatchPiston hatch;
   public static DogShifter dShifter;
   private Compressor compressor;
-  public static Kicker kickers;
+  public static KickerPistons kickers;
+  public static ClimberPistons climber;
+
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -46,20 +49,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
+    //Initialize subsystems
     drivetrain = new Drivetrain();
-    hatch = new Hatch();
+    hatch = new HatchPiston();
     dShifter = new DogShifter();
     oi = new OI();
-    kickers = new Kicker();
+    kickers = new KickerPistons();
+    climber = new ClimberPistons();
 
+
+    //Initialize and start compressor
     this.compressor = new Compressor(21);
     this.compressor.start();
-    //m_chooser.setDefaultOption("Default Auto", new Drivetrain());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    //SmartDashboard.putData("Auto mode", m_chooser);
 
 
+    // camera 1 setup
     this.camera1 = new UsbCamera("Front", 0);
     this.camera1.setResolution(320,240);
     this.camera1.setFPS(12);
@@ -68,6 +72,8 @@ public class Robot extends TimedRobot {
     // this.camera1.setCompression(40); //might not be correct, took from random class MjpegServer
     this.camera1.setBrightness(50);
 
+
+    // camera 2 setup
     this.camera2 = new UsbCamera("Back", 1);
     this.camera2.setResolution(320,240);
     this.camera2.setFPS(12);
