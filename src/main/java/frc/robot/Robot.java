@@ -11,13 +11,22 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.HatchPiston;
 import frc.robot.subsystems.DogShifter;
 import frc.robot.subsystems.KickerPistons;
 import frc.robot.subsystems.ClimberPistons;
+
 import edu.wpi.first.wpilibj.Compressor;
+
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 
 
 /**
@@ -64,23 +73,34 @@ public class Robot extends TimedRobot {
 
 
     // camera 1 setup
-    this.camera1 = new UsbCamera("Front", 0);
+    this.camera1 = CameraServer.getInstance().startAutomaticCapture();
     this.camera1.setResolution(320,240);
     this.camera1.setFPS(12);
     this.camera1.setWhiteBalanceAuto();
     this.camera1.setExposureAuto();
-    // this.camera1.setCompression(40); //might not be correct, took from random class MjpegServer
     this.camera1.setBrightness(50);
+    CvSink cvSink = CameraServer.getInstance().getVideo();
+    CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 480);
+    
+    Mat source = new Mat();
+    Mat output = new Mat();
+    
+    while(!Thread.interrupted()) {
+        cvSink.grabFrame(source);
+        Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+        outputStream.putFrame(output);
+    }
+
 
 
     // camera 2 setup
-    this.camera2 = new UsbCamera("Back", 1);
-    this.camera2.setResolution(320,240);
-    this.camera2.setFPS(12);
-    this.camera2.setWhiteBalanceAuto();
-    this.camera2.setExposureAuto();
+    // this.camera2 = new UsbCamera("Back", 1);
+    // this.camera2.setResolution(320,240);
+    // this.camera2.setFPS(12);
+    // this.camera2.setWhiteBalanceAuto();
+    // this.camera2.setExposureAuto();
     // this.camera2.setCompression(40); //might not be correct, took from random class MjpegServer
-    this.camera2.setBrightness(50);
+    // this.camera2.setBrightness(50);
   }
 
   /**

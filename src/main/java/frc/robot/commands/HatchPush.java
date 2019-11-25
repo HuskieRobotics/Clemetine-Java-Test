@@ -18,9 +18,6 @@ public class HatchPush extends Command {
            Robot.hatch.out(); //Robot hatch pusher extends
         }
         
-        
-        
-    }
 
     protected boolean isFinished() {
         return false;

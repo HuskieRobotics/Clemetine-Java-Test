@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.DriveWithJoystick;
 
+import java.lang.Math;
+
 
 public class Drivetrain extends Subsystem {
     private CANSparkMax MOTOR_1;
@@ -18,6 +20,7 @@ public class Drivetrain extends Subsystem {
 
 
     public Drivetrain() {
+        //initialize all motors, set 2,4,6 as inverted, set all motor default mode to brake
         this.MOTOR_1 = new CANSparkMax(1, MotorType.kBrushless);
         this.MOTOR_2 = new CANSparkMax(2, MotorType.kBrushless);
         this.MOTOR_3 = new CANSparkMax(3, MotorType.kBrushless);
@@ -45,12 +48,36 @@ public class Drivetrain extends Subsystem {
 
     public void arcadeDrive(double joystickX, double joystickY)
     {
+        //Apply raw motor values from joysticks
         double leftMotor = joystickX + joystickY;
         double rightMotor = joystickY - joystickX;
 
+        // Square drive
+        if (leftMotor < 0)
+        {
+            leftMotor = Math.pow(leftMotor, 2);
+            leftMotor *=-1;
+        }
+        else
+        {
+            leftMotor = Math.pow(leftMotor, 2);
+        }
+        
+        if (rightMotor < 0)
+        {
+            rightMotor = Math.pow(rightMotor, 2);
+            rightMotor *=-1;
+        }
+        else
+        {
+            rightMotor = Math.pow(rightMotor, 2);
+        }
+
+        //80% of total motor power
         leftMotor *= 0.8;
         rightMotor *= 0.8;
 
+        //Set power to motors
         this.MOTOR_1.set(leftMotor);
         this.MOTOR_2.set(leftMotor);
         this.MOTOR_3.set(leftMotor);
