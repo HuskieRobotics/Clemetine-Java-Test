@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.commands.GearShift;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+
 
 public class DogShifter extends Subsystem {
     private Solenoid dShifter;
@@ -18,10 +20,25 @@ public class DogShifter extends Subsystem {
         this.dShifter.set(false);
     }
 
-    @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new GearShift());
+        setDefaultCommand(new LowGear());
 
+    }
+    
+
+}
+
+class LowGear extends Command {
+    public LowGear() {
+        requires(Robot.dShifter);
+    }
+
+    protected void execute() {
+           Robot.dShifter.lowGear();
+    }
+
+    protected boolean isFinished() {
+        return false;
     }
 
 }

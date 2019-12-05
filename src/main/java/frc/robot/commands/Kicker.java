@@ -6,25 +6,28 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 public class Kicker extends Command {
+    Timer timer = new Timer();
+
     public Kicker() {
-       // requires(Robot.kickers);
+        requires(Robot.kickers);
     }
 
     protected void initialize() {
         Robot.kickers.up();
+        timer.reset();
+        timer.start();
     }
 
     protected void execute() {
         Robot.kickers.down();
-        Timer.delay(0.6);
     }
 
     protected boolean isFinished() {
-        return false;
-    }
+        return timer.get() >  .6;   }
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.kickers.up();
         
     }
     
@@ -33,3 +36,4 @@ public class Kicker extends Command {
     protected void interrupted() {
     }
 }
+

@@ -50,8 +50,8 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
-  private UsbCamera camera1;
-  private UsbCamera camera2;
+  //private UsbCamera camera1;
+  //private UsbCamera camera2;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -62,9 +62,15 @@ public class Robot extends TimedRobot {
     drivetrain = new Drivetrain();
     hatch = new HatchPiston();
     dShifter = new DogShifter();
-    oi = new OI();
+
     kickers = new KickerPistons();
     climber = new ClimberPistons();
+    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
+
+    oi = new OI(); // MAKE SURE TO PUT THIS LAST
+
+
 
 
     //Initialize and start compressor
@@ -73,23 +79,25 @@ public class Robot extends TimedRobot {
 
 
     // camera 1 setup
-    this.camera1 = CameraServer.getInstance().startAutomaticCapture();
-    this.camera1.setResolution(320,240);
-    this.camera1.setFPS(12);
-    this.camera1.setWhiteBalanceAuto();
-    this.camera1.setExposureAuto();
-    this.camera1.setBrightness(50);
-    CvSink cvSink = CameraServer.getInstance().getVideo();
-    CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 480);
+    // this.camera1 = CameraServer.getInstance().startAutomaticCapture();
+    // this.camera1.setResolution(320,240);
+    // this.camera1.setFPS(12);
+    // this.camera1.setWhiteBalanceAuto();
+    // this.camera1.setExposureAuto();
+    // this.camera1.setBrightness(50);
+    //CvSink cvSink = CameraServer.getInstance().getVideo();
+    //CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 480);
     
-    Mat source = new Mat();
-    Mat output = new Mat();
+    //Mat source = new Mat();
+    //Mat output = new Mat();
     
+    /*
     while(!Thread.interrupted()) {
         cvSink.grabFrame(source);
         Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
         outputStream.putFrame(output);
     }
+    */
 
 
 

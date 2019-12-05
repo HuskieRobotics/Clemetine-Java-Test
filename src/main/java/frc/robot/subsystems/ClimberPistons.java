@@ -12,12 +12,15 @@ public class ClimberPistons extends Subsystem {
 
     public void extend(){
         
+        this.ClimberSolenoid.set(true);
+    }
+
+    public void retract(){
         this.ClimberSolenoid.set(false);
     }
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new ClimberExtend());
 
     }
 

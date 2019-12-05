@@ -1,22 +1,22 @@
 package frc.robot.commands;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class HatchPush extends Command {
-    public HatchPush() {
+public class HatchIn extends InstantCommand {
+    public HatchIn() {
         requires(Robot.hatch);
     }
 
     protected void initialize() {
-        
-        Robot.hatch.in(); //Beins in the retracted position
+        SmartDashboard.putNumber("Init", SmartDashboard.getNumber("Init",0)+1);
+        //Robot.hatch.in(); //Beins in the retracted position
     }
 
     protected void execute() {
-        
-        
-           Robot.hatch.out(); //Robot hatch pusher extends
-        }
+
+        Robot.hatch.in(); //Robot hatch pusher extends
+    }
         
 
     protected boolean isFinished() {
@@ -25,7 +25,7 @@ public class HatchPush extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.hatch.in(); //Ends in the retracted position
+        //Robot.hatch.in(); //Ends in the retracted position
     }
     
     // Called when another command which requires one or more of the same

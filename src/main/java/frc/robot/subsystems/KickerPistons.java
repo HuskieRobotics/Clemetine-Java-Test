@@ -17,14 +17,13 @@ public class KickerPistons extends Subsystem {
         this.kickerSolenoid.set(true);
     }
 
-    public void up(){
-        
+    public void up(){  
         this.kickerSolenoid.set(false);
     }
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new Kicker());
+        //setDefaultCommand(new Kicker());
 
     }
 

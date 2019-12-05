@@ -2,9 +2,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.HatchPush;
+import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.commands.ClimberExtend;
+import frc.robot.commands.HatchOut;
 import frc.robot.commands.Kicker;
-import frc.robot.commands.GearShift;
+import frc.robot.commands.HighGear;
 
 
 public class OI {
@@ -21,21 +23,26 @@ public class OI {
         this.JOYSTICK_1 = new Joystick(0);
         this.JOYSTICK_2 = new Joystick(1);
 
+
         // Initilizes buttons for both joysticks
         this.joystickButtons1 = new JoystickButton[13];
         for(int i = 1; i <= joystickButtons1.length; i++) {
             joystickButtons1[i-1] = new JoystickButton(JOYSTICK_1, i);
         }
+        DoubleButton db = new DoubleButton(joystickButtons1[9], joystickButtons1[10]);
 
         this.joystickButtons2 = new JoystickButton[13];
         for(int j = 1; j <= joystickButtons2.length; j++) {
             joystickButtons2[j-1] = new JoystickButton(JOYSTICK_2, j);
         }
 
+        
+
         // Joystick Input - Subsystem conditionals
-        this.joystickButtons1[0].whileHeld(new HatchPush());
-        this.joystickButtons2[0].whileHeld(new GearShift());
+        this.joystickButtons1[0].whileHeld(new HatchOut());
+        this.joystickButtons2[0].whileHeld(new HighGear());
         this.joystickButtons1[4].whenPressed(new Kicker());
+        db.whenPressed(new ClimberExtend());
     }
     
 
@@ -58,4 +65,18 @@ public class OI {
     }
 
 
+}
+
+class DoubleButton extends Button{
+    private Button button1;
+    private Button button2;
+
+    public DoubleButton(Button b1, Button b2){
+        button1 = b1;
+        button2 = b2;
+    }
+    
+    public boolean get(){
+        return button1.get() && button2.get();
+    }
 }
