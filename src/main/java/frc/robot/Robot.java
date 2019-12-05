@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 
 import frc.robot.subsystems.Drivetrain;
@@ -44,6 +47,8 @@ public class Robot extends TimedRobot {
   private Compressor compressor;
   public static KickerPistons kickers;
   public static ClimberPistons climber;
+  public static DriverStation ds = DriverStation.getInstance();
+
 
 
   Command m_autonomousCommand;
@@ -150,7 +155,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    //m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -160,9 +165,9 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
+    //if (m_autonomousCommand != null) {
+      //m_autonomousCommand.start();
+    //}
   }
 
   /**
@@ -170,7 +175,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+    //Scheduler.getInstance().run();
+    teleopPeriodic();
+    SmartDashboard.putNumber("time remaining", ds.getMatchTime());
+    SmartDashboard.putBoolean("operator control", ds.isOperatorControl());
+
   }
 
   @Override
@@ -190,6 +199,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("time remaining", ds.getMatchTime());
+    SmartDashboard.putBoolean("operator control", ds.isOperatorControl());
+
+
   }
 
   /**

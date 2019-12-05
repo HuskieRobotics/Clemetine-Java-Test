@@ -35,5 +35,9 @@ public class Kicker extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
+    public boolean condition(){
+        return Robot.ds.getMatchTime()<100  && Robot.ds.isOperatorControl();
+    }
 }
 

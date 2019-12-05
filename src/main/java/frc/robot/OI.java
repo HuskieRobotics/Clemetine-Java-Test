@@ -1,12 +1,17 @@
 package frc.robot;
 
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.ClimberExtend;
 import frc.robot.commands.HatchOut;
 import frc.robot.commands.Kicker;
 import frc.robot.commands.HighGear;
+
 
 
 public class OI {
@@ -22,6 +27,8 @@ public class OI {
         // Initilizes both joysticks
         this.JOYSTICK_1 = new Joystick(0);
         this.JOYSTICK_2 = new Joystick(1);
+
+        DriverStation ds = DriverStation.getInstance();
 
 
         // Initilizes buttons for both joysticks
@@ -41,8 +48,15 @@ public class OI {
         // Joystick Input - Subsystem conditionals
         this.joystickButtons1[0].whileHeld(new HatchOut());
         this.joystickButtons2[0].whileHeld(new HighGear());
-        this.joystickButtons1[4].whenPressed(new Kicker());
+        
+        this.joystickButtons1[4].whenPressed(new ConditionalCommand(new Kicker()){
+            @Override
+            protected boolean condition() {
+                return ds.getMatchTime() < 100 && ds.isOperatorControl();
+            }
+        }); 
         db.whenPressed(new ClimberExtend());
+        
     }
     
 
