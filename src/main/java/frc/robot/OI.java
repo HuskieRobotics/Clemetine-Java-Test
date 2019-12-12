@@ -11,6 +11,7 @@ import frc.robot.commands.ClimberExtend;
 import frc.robot.commands.HatchOut;
 import frc.robot.commands.Kicker;
 import frc.robot.commands.HighGear;
+import frc.robot.commands.VisionStart;
 
 
 
@@ -57,6 +58,7 @@ public class OI {
         }); 
         db.whenPressed(new ClimberExtend());
         
+        this.joystickButtons1[2].whileHeld(new VisionStart());
     }
     
 
