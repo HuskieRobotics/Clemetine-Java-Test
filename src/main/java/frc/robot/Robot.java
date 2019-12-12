@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
-
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 
 import frc.robot.subsystems.Drivetrain;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
   private Compressor compressor;
   public static KickerPistons kickers;
   public static ClimberPistons climber;
+  public static TalonSRX talon = new TalonSRX(4);
+  public static PigeonIMU pigeon;
   public static DriverStation ds = DriverStation.getInstance();
 
 
@@ -70,6 +73,9 @@ public class Robot extends TimedRobot {
 
     kickers = new KickerPistons();
     climber = new ClimberPistons();
+
+    pigeon = new PigeonIMU(talon);
+    pigeon.setYaw(0);
     CameraServer.getInstance().startAutomaticCapture();
     CameraServer.getInstance().startAutomaticCapture();
 
@@ -201,7 +207,10 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     SmartDashboard.putNumber("time remaining", ds.getMatchTime());
     SmartDashboard.putBoolean("operator control", ds.isOperatorControl());
-
+    
+    double [] ypr = new double [3];
+    pigeon.getYawPitchRoll(ypr);
+    SmartDashboard.putNumber("pigoen",ypr[0]);
 
   }
 

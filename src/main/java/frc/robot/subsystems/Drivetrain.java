@@ -78,12 +78,19 @@ public class Drivetrain extends Subsystem {
         rightMotor *= 0.8;
 
         //Set power to motors
-        this.MOTOR_1.set(leftMotor);
-        this.MOTOR_2.set(leftMotor);
-        this.MOTOR_3.set(leftMotor);
+        setLeftPower(leftMotor);
       
-        this.MOTOR_4.set(rightMotor);
-        this.MOTOR_5.set(rightMotor);
-        this.MOTOR_6.set(rightMotor); 
+        setRightPower(rightMotor); 
+    }
+
+    public void setRightPower (double power) {
+        this.MOTOR_4.set(power);
+        this.MOTOR_5.set(power);
+        this.MOTOR_6.set(power); 
+    }
+    public void setLeftPower (double power) {
+        this.MOTOR_1.set(power);
+        this.MOTOR_2.set(power);
+        this.MOTOR_3.set(power); 
     }
 }

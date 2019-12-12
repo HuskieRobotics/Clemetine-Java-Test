@@ -20,7 +20,7 @@ public class DriveWithJoystick extends Command {
 	protected void execute() {
 		
 		    	
-    	Robot.drivetrain.arcadeDrive(Robot.oi.getRightX(), Robot.oi.getLeftY());
+    	Robot.drivetrain.arcadeDrive(Robot.oi.getRightX(), -Robot.oi.getLeftY());
     	
 	}
 

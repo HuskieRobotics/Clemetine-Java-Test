@@ -11,6 +11,7 @@ import frc.robot.commands.ClimberExtend;
 import frc.robot.commands.HatchOut;
 import frc.robot.commands.Kicker;
 import frc.robot.commands.HighGear;
+import frc.robot.commands.Turn;
 
 
 
@@ -56,6 +57,10 @@ public class OI {
             }
         }); 
         db.whenPressed(new ClimberExtend());
+
+        this.joystickButtons2[2].whenPressed(new Turn(180));
+        this.joystickButtons2[3].whenPressed(new Turn(90));
+        this.joystickButtons2[4].whenPressed(new Turn(270));
         
     }
     
