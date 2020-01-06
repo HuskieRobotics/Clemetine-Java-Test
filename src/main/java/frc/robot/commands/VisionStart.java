@@ -10,9 +10,9 @@ public class VisionStart extends Command {
 
     protected void execute() {
 
-        
-        Robot.drivetrain.arcadeDrive(Robot.limelight.getLimelightSteerCommand(), Robot.limelight.getLimelightDriveCommand());
-
+        if (Robot.limelight.getLimelightHasValidTarget() == true) {}
+            Robot.drivetrain.arcadeDrive(Robot.limelight.getLimelightSteerCommand(), Robot.limelight.getLimelightDriveCommand());
+        }
         
     }
 
